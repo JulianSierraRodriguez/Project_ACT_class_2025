@@ -23,7 +23,9 @@ program main
   allocate(C(N))
   allocate((eps(N))
 
-
+  do i = 1, N
+    write(*,*) H_mat(i)
+  end do
 
 
 end program main
