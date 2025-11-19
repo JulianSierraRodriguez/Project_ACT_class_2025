@@ -1,0 +1,14 @@
+    |-----------|
+    |  Project  |
+    |-----------|
+
+- Build a Hamiltonian H = H^+
+- Build an Overlap matrix S = C_0 C_0^T
+- Compute S^-1/2
+- Solve naively HC = eps S C with S^-1/2 H S^-1/2 S^1/2 C = eps S^1/2 C_0
+- Solve it using linear algebra
+
+-- Test Hermicity
+-- positive definiteness
+
+Use git (local), doxygen, Fortran (Blas Lapack), gprof
