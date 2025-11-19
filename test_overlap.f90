@@ -2,8 +2,9 @@ program main
   ! Declare variables
 
   implicit none
-  real(8) , allocatable :: S_mat(:,:), C_0(:,:), C_0_transp(:,:)
-  integer :: N, i, j, k
+  real(8) , allocatable :: S_mat(:,:), C_0(:,:), C_0_transp(:,:), W(:), work(:)
+  integer :: N, i, j, k, lwork, info
+  character :: JOBZ, RANGE, UPLO
 
 
 
@@ -73,4 +74,22 @@ program main
     write(*,*)S_mat(i,:)
   end do
 
+  ! to check that overlap is correct, we have to diagonalize and check all the eigenvalues are positive
+
+  JOBZ  = 'V'
+  RANGE = 'A'
+  UPLO  = 'U'
+  lwork = 3*N-1
+
+  allocate(W(N))
+  allocate(work(lwork))
+
+  call DSYEV(JOBZ, UPLO, N, S_mat, N, W, work, lwork, info)
+
+  if (info .eq. 0) then
+    write(*,*) 'INFO = ',info,'----> Successful run'
+    write(*,*) W
+  end if
+
 end program main
+! dsyev
