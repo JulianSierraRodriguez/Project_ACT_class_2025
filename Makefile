@@ -1,5 +1,6 @@
 .SUFFIXES:
 .SUFFIXES: .o .f90 .mod
+#It tells make which suffixes are valid for implicit rules.
 
 FC = gfortran
 O = -O3
@@ -22,10 +23,10 @@ main: $(MOD) $(OBJ)
 #   command to build target
 ##############
 
-.f90.mod: # we want to create a modfile, it does not need anything but the f90
+.f90.mod: # change f90 to a mod ## we want to create a modfile, it does not need anything but the f90
 	$(FC) $(O) -c $*.f90 2>&1 | tee $*.TMPmod
 # the .mod file has the functions names and arguments for the compiler to work, in this case is a temporal  interface for modulus
-.f90.o: $(MOD) # we want to create a objectfile, it need the mod file
+.f90.o: $(MOD) # change f90 to a o ## we want to create a objectfile, it need the mod file
 	$(FC) $(O) -c $*.f90 2>&1 | tee $*.TMPl
 #the .o file is needed for linking to the executable. 
 ## linking --- The linker combines all .o files plus any required libraries (like LAPACK, BLAS, Fortran runtime) into one executable file.
