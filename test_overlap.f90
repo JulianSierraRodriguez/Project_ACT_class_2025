@@ -2,7 +2,7 @@ program main
   ! Declare variables
 
   implicit none
-  real(8) , allocatable :: S_mat(:,:), C_0(:,:)
+  real(8) , allocatable :: S_mat(:,:), C_0(:,:), C_0_transp(:,:)
   integer :: N, i, j, k
 
 
@@ -19,6 +19,7 @@ program main
 
   allocate(S_mat(N,N))
   allocate(C_0(N,N))
+  allocate(C_0_transp(N,N))
 
   call random_number(C_0)
 
@@ -28,8 +29,8 @@ program main
     write(*,*)C_0(i,:)
   end do
 
-  do i = 1, 5
-    do j = 1, 5
+  do i = 1, N
+    do j = 1, N
       C_0(i, j) = 0.5 * (C_0(i, j) + C_0(j, i))
     end do
 !     Add a scalar to diagonal for positive definiteness
@@ -42,5 +43,34 @@ program main
     write(*,*)C_0(i,:)
   end do
 
+  ! transpose the matrix
+  do i = 1,N
+    do j = 1,n
+      C_0_transp(j,i) = C_0(i,j)
+    end do
+  end do
+
+  write(*,*)"Transposed C_0"
+
+  do i = 1,N
+    write(*,*)C_0_transp(i,:)
+  end do
+
+  ! Overlap matrix as the product C_0 C_0^T
+
+  do i = 1,N
+    do j = 1,N
+    S_mat(i,j) = 0
+      do k = 1,N
+      S_mat(i,j) = S_mat(i,j) + C_0(i,k)*C_0_transp(k,j)
+      end do
+    end do
+  end do
+
+  write(*,*)"Overlap matrix"
+
+  do i = 1,N
+    write(*,*)S_mat(i,:)
+  end do
 
 end program main
