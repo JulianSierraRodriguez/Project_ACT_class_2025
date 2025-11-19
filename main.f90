@@ -2,7 +2,7 @@ program main
   ! Declare variables
 
   implicit none
-  real(8) , allocatable :: H_mat(:,:), S_mat(:,:), C_0(:), C(:), eps(:)
+  real(8) , allocatable :: H_mat(:,:), S_mat(:,:), C_0(:,:), C(:,:), eps(:)
   integer :: N, i, j, k
 
 
@@ -19,8 +19,8 @@ program main
 
   allocate(H_mat(N,N))
   allocate(S_mat(N,N))
-  allocate(C_0(N))
-  allocate(C(N))
+  allocate(C_0(N,N))
+  allocate(C(N,N))
   allocate(eps(N))
 
   do i = 1, N
